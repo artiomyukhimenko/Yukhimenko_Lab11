@@ -1,0 +1,52 @@
+
+#include <Windows.h>
+#include <iostream>
+#include <string>
+#include <regex>
+using namespace std;
+
+struct Transaction {
+private:
+    string transactionNumber;
+    double amount;
+    string currency;
+public:
+    Transaction(const string& transactionNumber, double amount, const string& currency)
+        : transactionNumber(transactionNumber), amount(amount), currency(currency) {}
+
+    void display() const {
+        cout << "Номер транзакції: " << transactionNumber << endl;
+        cout << "Сума: " << amount << endl;
+        cout << "Валюта: " << currency << endl;
+    }
+
+    bool додатиЧас() {
+        
+        regex shablon("\\d{4}[A-Z]{3}"); 
+        if (regex_match(transactionNumber, shablon)) {
+            transactionNumber += "-YEAR-2025"; 
+            return true;
+        }
+        else {
+            return false; 
+        }
+    }
+};
+
+int main() {
+    SetConsoleCP(1251);        
+    SetConsoleOutputCP(1251); 
+
+    Transaction tr("0007ABC", 150.0, "UAH"); 
+
+    if (tr.додатиЧас()) {
+        cout << "Мітка часу додана" << endl;
+    }
+    else {
+        cout << " Формат неправильний!" << endl;
+    }
+
+    tr.display(); 
+
+    return 0;
+}
